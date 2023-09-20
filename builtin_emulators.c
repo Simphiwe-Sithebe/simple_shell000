@@ -2,40 +2,40 @@
 
 /**
  * _myexit - exits the shell
- * @info: Structure containing potential arguments. Used to maintain
+ * @imfostruct: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: exits with a given exit status
- *         (0) if info.argv[0] != "exit"
+ *         (0) if imfostruct.argv[0] != "exit"
  */
-int _myexit(info_t *info)
+int _myexit(info_t *imfostruct)
 {
-	int exitcheck;
+	int exitchek;
 
-	if (info->argv[1])  /* If there is an exit arguement */
+	if (imfostruct->argv[1])  /* If there is an exit arguement */
 	{
-		exitcheck = _erratoi(info->argv[1]);
-		if (exitcheck == -1)
+		exitchek = _erratoi(imfostruct->argv[1]);
+		if (exitchek == -1)
 		{
-			info->status = 2;
-			print_error(info, "Illegal number: ");
-			_eputs(info->argv[1]);
+			imfostruct->status = 2;
+			print_error(imfostruct, "Illegal number: ");
+			_eputs(imfostruct->argv[1]);
 			_eputchar('\n');
 			return (1);
 		}
-		info->err_num = _erratoi(info->argv[1]);
+		imfostruct->err_num = _erratoi(imfostruct->argv[1]);
 		return (-2);
 	}
-	info->err_num = -1;
+	imfostruct->err_num = -1;
 	return (-2);
 }
 
 /**
  * _mycd - changes the current directory of the process
- * @info: Structure containing potential arguments. Used to maintain
+ * @imfostruct: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: Always 0
  */
-int _mycd(info_t *info)
+int _mycd(info_t *imfostruct)
 {
 	char *s, *dir, buffer[1024];
 	int chdir_ret;
@@ -43,53 +43,53 @@ int _mycd(info_t *info)
 	s = getcwd(buffer, 1024);
 	if (!s)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
-	if (!info->argv[1])
+	if (!imfostruct->argv[1])
 	{
-		dir = _getenv(info, "HOME=");
+		dir = _getenv(imfostruct, "HOME=");
 		if (!dir)
 			chdir_ret = /* TODO: what should this be? */
-				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+				chdir((dir = _getenv(imfostruct, "PWD=")) ? dir : "/");
 		else
 			chdir_ret = chdir(dir);
 	}
-	else if (_strcmp(info->argv[1], "-") == 0)
+	else if (_strcmp(imfostruct->argv[1], "-") == 0)
 	{
-		if (!_getenv(info, "OLDPWD="))
+		if (!_getenv(imfostruct, "OLDPWD="))
 		{
 			_puts(s);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
+		_puts(_getenv(imfostruct, "OLDPWD=")), _putchar('\n');
 		chdir_ret = /* TODO: what should this be? */
-			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+			chdir((dir = _getenv(imfostruct, "OLDPWD=")) ? dir : "/");
 	}
 	else
-		chdir_ret = chdir(info->argv[1]);
+		chdir_ret = chdir(imfostruct->argv[1]);
 	if (chdir_ret == -1)
 	{
-		print_error(info, "can't cd to ");
-		_eputs(info->argv[1]), _eputchar('\n');
+		print_error(imfostruct, "can't cd to ");
+		_eputs(imfostruct->argv[1]), _eputchar('\n');
 	}
 	else
 	{
-		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-		_setenv(info, "PWD", getcwd(buffer, 1024));
+		_setenv(imfostruct, "OLDPWD", _getenv(imfostruct, "PWD="));
+		_setenv(imfostruct, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }
 
 /**
  * _myhelp - changes the current directory of the process
- * @info: Structure containing potential arguments. Used to maintain
+ * @imfostruct: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: Always 0
  */
-int _myhelp(info_t *info)
+int _myhelp(info_t *imfostruct)
 {
 	char **arg_array;
 
-	arg_array = info->argv;
+	arg_array = imfostruct->argv;
 	_puts("help call works. Function not yet implemented \n");
 	if (0)
 		_puts(*arg_array); /* temp att_unused workaround */
