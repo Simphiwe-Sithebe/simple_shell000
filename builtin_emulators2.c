@@ -23,17 +23,17 @@ int _myhistory(info_t *infostruct)
 int unset_alias(info_t *infostruct, char *stra)
 {
 	char *p, c;
-	int returnedd;
+	int ret;
 
 	p = _strchr(stra, '=');
 	if (!p)
 		return (1);
 	c = *p;
 	*p = 0;
-	returnedd = delete_node_at_index(&(infostruct->alias),
+	ret = delete_node_at_index(&(infostruct->alias),
 		get_node_index(infostruct->alias, node_starts_with(infostruct->alias, stra, -1)));
 	*p = c;
-	return (returnedd);
+	return (ret);
 }
 
 /**
