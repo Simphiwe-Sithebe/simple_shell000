@@ -3,24 +3,24 @@
 /**
  * _myhistory - displays the history list, one command by line, preceded
  *              with line numbers, starting at 0.
- * @infostruct: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
-int _myhistory(info_t *infostruct)
+int _myhistory(info_t *inf)
 {
-	print_list(infostruct->history);
+	print_list(inf->history);
 	return (0);
 }
 
 /**
  * unset_alias - sets alias to string
- * @infostruct: parameter struct
+ * @inf: parameter struct
  * @stra: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
-int unset_alias(info_t *infostruct, char *stra)
+int unset_alias(info_t *inf, char *stra)
 {
 	char *p, c;
 	int ret;
@@ -30,20 +30,20 @@ int unset_alias(info_t *infostruct, char *stra)
 		return (1);
 	c = *p;
 	*p = 0;
-	ret = delete_node_at_index(&(infostruct->alias),
-		get_node_index(infostruct->alias, node_starts_with(infostruct->alias, stra, -1)));
+	ret = delete_node_at_index(&(inf->alias),
+		get_node_index(inf->alias, node_starts_with(inf->alias, stra, -1)));
 	*p = c;
 	return (ret);
 }
 
 /**
  * set_alias - sets alias to string
- * @infostruct: parameter struct
+ * @inf: parameter struct
  * @stra: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
-int set_alias(info_t *infostruct, char *stra)
+int set_alias(info_t *inf, char *stra)
 {
 	char *p;
 
@@ -51,10 +51,10 @@ int set_alias(info_t *infostruct, char *stra)
 	if (!p)
 		return (1);
 	if (!*++p)
-		return (unset_alias(infostruct, stra));
+		return (unset_alias(inf, stra));
 
-	unset_alias(infostruct, stra);
-	return (add_node_end(&(infostruct->alias), stra, 0) == NULL);
+	unset_alias(inf, stra);
+	return (add_node_end(&(inf->alias), stra, 0) == NULL);
 }
 
 /**
@@ -82,19 +82,19 @@ int print_alias(list_t *node)
 
 /**
  * _myalias - mimics the alias builtin (man alias)
- * @infostruct: Structure containing potential arguments. Used to maintain
+ * @inf: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: Always 0
  */
-int _myalias(info_t *infostruct)
+int _myalias(info_t *inf)
 {
 	int x = 0;
 	char *p = NULL;
 	list_t *node = NULL;
 
-	if (infostruct->argc == 1)
+	if (inf->argc == 1)
 	{
-		node = infostruct->alias;
+		node = inf->alias;
 		while (node)
 		{
 			print_alias(node);
@@ -102,13 +102,13 @@ int _myalias(info_t *infostruct)
 		}
 		return (0);
 	}
-	for (x = 1; infostruct->argv[x]; x++)
+	for (x = 1; inf->argv[x]; x++)
 	{
-		p = _strchr(infostruct->argv[x], '=');
+		p = _strchr(inf->argv[x], '=');
 		if (p)
-			set_alias(infostruct, infostruct->argv[x]);
+			set_alias(inf, inf->argv[x]);
 		else
-			print_alias(node_starts_with(infostruct->alias, infostruct->argv[x], '='));
+			print_alias(node_starts_with(inf->alias, inf->argv[x], '='));
 	}
 
 	return (0);
