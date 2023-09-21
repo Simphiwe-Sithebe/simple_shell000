@@ -2,17 +2,17 @@
 
 /**
  * list_len - determines length of linked list
- * @h: pointer to first node
+ * @f: pointer to first node
  *
  * Return: size of list
  */
-size_t list_len(const list_t *h)
+size_t list_len(const list_t *f)
 {
 	size_t i = 0;
 
-	while (h)
+	while (f)
 	{
-		h = h->next;
+		f = f->next;
 		i++;
 	}
 	return (i);
@@ -57,22 +57,22 @@ char **list_to_strings(list_t *head)
 
 /**
  * print_list - prints all elements of a list_t linked list
- * @h: pointer to first node
+ * @f: pointer to first node
  *
  * Return: size of list
  */
-size_t print_list(const list_t *h)
+size_t print_list(const list_t *f)
 {
 	size_t i = 0;
 
-	while (h)
+	while (f)
 	{
-		_puts(convert_number(h->num, 10, 0));
+		_puts(convert_number(f->num, 10, 0));
 		_putchar(':');
 		_putchar(' ');
-		_puts(h->str ? h->str : "(nil)");
+		_puts(f->str ? f->str : "(nil)");
 		_puts("\n");
-		h = h->next;
+		f = f->next;
 		i++;
 	}
 	return (i);
