@@ -4,24 +4,24 @@
  **_strncpy - copies a string
  *@dest: the destination string to be copied to
  *@src: the source string
- *@n: the amount of characters to be copied
+ *@num: the amount of characters to be copied
  *Return: the concatenated string
  */
-char *_strncpy(char *dest, char *src, int n)
+char *_strncpy(char *dest, char *src, int num)
 {
-	int i, j;
+	int x, j;
 	char *s = dest;
 
-	i = 0;
-	while (src[i] != '\0' && i < n - 1)
+	x = 0;
+	while (src[x] != '\0' && x < num - 1)
 	{
-		dest[i] = src[i];
-		i++;
+		dest[x] = src[x];
+		x++;
 	}
-	if (i < n)
+	if (x < num)
 	{
-		j = i;
-		while (j < n)
+		j = x;
+		while (j < num)
 		{
 			dest[j] = '\0';
 			j++;
@@ -34,26 +34,26 @@ char *_strncpy(char *dest, char *src, int n)
  **_strncat - concatenates two strings
  *@dest: the first string
  *@src: the second string
- *@n: the amount of bytes to be maximally used
+ *@num: the amount of bytes to be maximally used
  *Return: the concatenated string
  */
-char *_strncat(char *dest, char *src, int n)
+char *_strncat(char *dest, char *src, int num)
 {
-	int i, j;
+	int x, j;
 	char *s = dest;
 
-	i = 0;
+	x = 0;
 	j = 0;
-	while (dest[i] != '\0')
-		i++;
-	while (src[j] != '\0' && j < n)
+	while (dest[x] != '\0')
+		x++;
+	while (src[j] != '\0' && j < num)
 	{
-		dest[i] = src[j];
-		i++;
+		dest[x] = src[j];
+		x++;
 		j++;
 	}
-	if (j < n)
-		dest[i] = '\0';
+	if (j < num)
+		dest[x] = '\0';
 	return (s);
 }
 
